@@ -1,5 +1,0 @@
-name = Fast Company Ads
-description = Special ad features for FC.
-core = 6.x
-package = Custom
-dependencies[] = dart
