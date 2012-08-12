@@ -1,0 +1,60 @@
+<?php
+
+//$Id$
+/**
+  * @file
+  * Provides a simulated beep.
+*/
+
+function beep_beep(){
+	//Writes the message Beep! to Drupal's log
+	watchdog('beep','Beep!');
+}
+
+/**
+* Implementation of hook_user().
+*/
+
+//Logs when user log in
+function beep_user($op, &$edit, &$account, $category = NULL){
+	if ($op == 'login'){
+		beep_beep();
+	}
+}
+
+/**
+* Implementation of hook_nodeapi().
+*/
+
+//Logs when new content is added
+function hook_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL){
+	if ($op == 'insert'){
+		beep_beep();
+	}
+}
+
+/**
+* Implementation of hook_action_info().
+*/
+
+function beep_action_info() {
+$info['beep_beep_action'] = array(
+'type' => 'system',
+'description' => t('Beep annoyingly'),
+'configurable' => FALSE,
+'hooks' => array(
+'nodeapi' => array('view', 'insert', 'update', 'delete'),
+'comment' => array('view', 'insert', 'update', 'delete'),
+'user' => array('view', 'insert', 'update', 'delete', 'login'),
+'taxonomy' => array('insert', 'update', 'delete'),
+),
+);
+return $info;
+}
+
+/**
+* Simulate a beep. A Drupal action.
+*/
+function beep_beep_action() {
+beep_beep();
+}
